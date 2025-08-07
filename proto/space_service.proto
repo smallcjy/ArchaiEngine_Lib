@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+package space_service;
+
+message Vector3f {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+message Movement {
+  Vector3f position = 1;
+  Vector3f rotation = 2;
+  optional Vector3f velocity = 3;
+  optional Vector3f acceleration = 4;
+  optional Vector3f angular_velocity = 5;
+  int32 mode = 6;
+  float timestamp = 7;
+}
+
+message LoginRequest {
+  string username = 1;
+}
+
+message LoginReply {
+  int32 result = 1;
+  int32 eid = 2;
+}
+
+message JoinReply {
+  int32 result = 1;
+  optional Vector3f position = 2;
+}
+
+message PlayerInfo {
+  int32 eid = 1;
+  bytes data = 2;
+}
+
+message PlayerDeltaInfo {
+  int32 eid = 1;
+  bytes data = 2;
+}
+
+message AoiEntity {
+  string entity_type = 1;
+  bytes data = 2;
+  Vector3f position = 3;
+  Vector3f rotation = 4;
+}
+
+message EntitiesEnterSight {
+  repeated AoiEntity entities = 1;
+}
+
+message EntitiesLeaveSight {
+  repeated int32 entities = 1;
+}
+
+message AoiUpdate {
+  int32 eid = 1;
+  optional bytes data = 2;
+}
+
+message AoiUpdates {
+  repeated AoiUpdate datas = 1;
+}
+
+message Ping {
+  float t = 1;
+}
+
+message Pong {
+  float t = 1;
+  int32 server_t = 2;
+}
+
+message NormalAttack {
+  int32 combo = 1;
+}
+
+message SkillAttack {
+  int32 skill_id = 1;
+}
+
+message Animation {
+  enum OperationType {
+    START = 0;
+    STOP = 1;
+    UPDATE = 2;
+  }
+
+  string name = 1;
+  OperationType op = 2;
+  float speed = 3;
+}
+
+message PlayerAnimation {
+  int32 eid = 1;
+  Animation data = 2;
+}
+
+message TakeDamage {
+  int32 eid = 1;
+  int32 damage = 2;
+}
+
+message QueryPath {
+  Vector3f start_pos = 1;
+  Vector3f end_pos = 2;
+}
+
+message QueryPathResult {
+  repeated Vector3f paths = 1;
+}
